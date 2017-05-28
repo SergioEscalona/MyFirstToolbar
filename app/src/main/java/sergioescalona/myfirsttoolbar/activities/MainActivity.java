@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import sergioescalona.myfirsttoolbar.Adapters.PagerAdapter;
 import sergioescalona.myfirsttoolbar.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +32,35 @@ public class MainActivity extends AppCompatActivity {
         //Colocamos los tabs.
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        //Creamos una referencia para el ViewPager
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        //Creamos un nuevo PagerAdapter
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        //Seteamos el adaptador.
+        viewPager.setAdapter(adapter);
+        //Añadimos un listener para cada vez que cambiemos de Fragment.
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        //¿Qué tenemos que hacer para cambiar de un tab a otro?
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //Cuando Seleccionamos el Tab.
+                int position = tab.getPosition();
+                viewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //Cuando lo deseleccionamos.
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //Cuando lo volvemos a seleccionar.
+
+            }
+        });
     }
 }
